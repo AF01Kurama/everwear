@@ -1,0 +1,19 @@
+* {
+  border: none;
+  margin: 0;
+  padding: 0;
+  font-family: "Playfair Display", serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+
+body {
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+:root {
+  --color1: #98ccff;
+  --color2: #99ff98;
+  --color3: #ffffe0;
+}

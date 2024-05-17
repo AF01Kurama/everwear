@@ -1,0 +1,46 @@
+.stockphotos {
+  height: 100%;
+  width: 100%;
+  position: relative;
+}
+
+.stocks {
+  height: 100%;
+  min-width: 100%;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.arrow {
+  position: absolute;
+  font-size: 2rem;
+  height: 6vh;
+  width: 6vh;
+  top: 47%;
+  transition: all 0.25s linear;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.arrow:hover {
+  cursor: pointer;
+}
+
+.left {
+  left: 1%;
+}
+
+.right {
+  right: 1%;
+}
+
+.black-out {
+  outline: solid 2px black;
+}
+
+.white-out {
+  outline: solid 2px white;
+}

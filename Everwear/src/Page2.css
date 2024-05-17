@@ -1,0 +1,129 @@
+.main2 {
+  min-width: 100%;
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 4rem;
+  margin-top: 6rem;
+  position: relative;
+}
+
+.card_ {
+  width: 90%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  padding: 2rem;
+  gap: 7.5vw;
+  position: relative;
+  border: 2px black solid;
+}
+
+.cardPhoto {
+  height: 20rem;
+  width: 20rem;
+  border-radius: 10%;
+  background-color: black;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 0.25rem 0.25rem black;
+}
+
+.cardPhoto img {
+  height: 20rem;
+  width: 20rem;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.cardBody {
+  max-width: 50%;
+  padding: 1.3rem;
+}
+
+.cardTitle {
+  text-align: center;
+  margin-bottom: 2.5rem;
+  position: relative;
+}
+
+.cardTitle::after {
+  content: "";
+  position: absolute;
+  width: 110%;
+  height: 0.075rem;
+  background-color: black;
+  left: -5%;
+  bottom: -1.5rem;
+}
+
+.end {
+  width: 70%;
+  padding: 2rem;
+  border: 2px black solid;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 1rem;
+  text-align: center;
+  gap: 2rem;
+  background-color: var(--color3);
+  position: relative;
+}
+
+.end form {
+  width: 80%;
+}
+
+.end input {
+  max-width: 20rem;
+}
+
+.end form > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+  position: relative;
+}
+
+.end button {
+  max-width: 40%;
+}
+
+.invalid-email {
+  position: absolute;
+  color: red;
+  font-size: 0.7rem;
+  top: 105%;
+  left: 2%;
+}
+
+@media (max-width: 700px) {
+  .end {
+    width: 85%;
+  }
+
+  .end form > div {
+    flex-direction: column;
+  }
+  .cardBody {
+    max-width: 95%;
+  }
+  .cardPhoto,
+  .cardPhoto img {
+    width: 10rem;
+    height: 10rem;
+  }
+
+  .card_ {
+    gap: 2rem;
+  }
+}
