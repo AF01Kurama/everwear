@@ -21,6 +21,10 @@ app.listen(3000, () => {
   console.log("app started");
 });
 
+app.get("/", (req, res) => {
+  res.send("hi");
+});
+
 app.post("/email", async (req, res) => {
   console.log("hi");
   let { useremail } = req.body;
