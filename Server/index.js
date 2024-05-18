@@ -1,5 +1,14 @@
 if (process.env.NODE_ENV != "production") require("dotenv").config();
 
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", process.env.CLIENT_URL);
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  next();
+});
+
 const express = require("express");
 const app = express();
 const Email = require("./emailSchema");

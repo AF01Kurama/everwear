@@ -102,8 +102,7 @@
   position: absolute;
   color: red;
   font-size: 0.7rem;
-  top: 105%;
-  left: 2%;
+  top: 110%;
 }
 
 @media (max-width: 700px) {
