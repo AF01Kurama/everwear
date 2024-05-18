@@ -5,6 +5,7 @@ import img2 from "./assets/card2.png";
 import img3 from "./assets/card3.png";
 import img4 from "./assets/card4.png";
 import { motion, useScroll, useTransform } from "framer-motion";
+import axios from "axios";
 
 function Page2({ width, height }) {
   const targetRefs = [
@@ -38,7 +39,18 @@ function Page2({ width, height }) {
     else setValidEmail(false);
     setEmail(str);
   };
-  const onSubmit = () => {
+  const onSubmit = async (event) => {
+    event.preventDefault();
+    axios
+      .post("https://everwear.onrender.com/email", {
+        useremail: email,
+      })
+      .then(() => {
+        console.log(done);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     if (validEmail) setEmailSubmitted(true);
     else return;
   };
@@ -115,7 +127,7 @@ function Page2({ width, height }) {
             Stay in the loop and enjoy a <b>free month's subscription</b> at
             launch by sharing your email with us.
           </div>
-          <form action="http://localhost:3000/email" method="post">
+          <form onSubmit={onSubmit}>
             <div>
               {validEmail || email == "" ? null : (
                 <div className="invalid-email">Please enter a valid email</div>
@@ -130,7 +142,7 @@ function Page2({ width, height }) {
                 onChange={handleInput}
                 required
               />
-              <button className="btn btn-outline-success" onSubmit={onSubmit}>
+              <button className="btn btn-outline-success" type="submit">
                 Submit
               </button>
             </div>

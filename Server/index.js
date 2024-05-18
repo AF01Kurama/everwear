@@ -33,5 +33,5 @@ app.post("/email", async (req, res) => {
     email: useremail,
   });
   await entry.save();
-  res.redirect(process.env.CLIENT_URL);
+  res.status(200).json({ message: "Data received successfully", data });
 });
