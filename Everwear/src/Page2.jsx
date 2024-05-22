@@ -35,6 +35,17 @@ function Page2({ width }) {
   let [sendEmail, setSendEmail] = useState(false);
   let [subject, setSubject] = useState("");
   let [message, setMessage] = useState("");
+  let [scroll, setScroll] = useState(null);
+
+  window.onscroll = () => {
+    if (sendEmail) {
+      window.scrollTo({
+        top: scroll,
+        left: window.scrollX,
+        behavior: "instant",
+      });
+    }
+  };
 
   const handleInput = (fn, event) => {
     let str = event.target.value;
@@ -75,7 +86,6 @@ function Page2({ width }) {
       })
       .then(() => {
         setSendEmail(false);
-        setEmail2("");
         setSubject("");
         setMessage("");
       })
@@ -180,6 +190,7 @@ function Page2({ width }) {
         You can reach us at <b>everwears@gmail.com</b> or{" "}
         <span
           onClick={() => {
+            setScroll(window.scrollY);
             setSendEmail(true);
           }}>
           <u>click here</u>
@@ -213,6 +224,8 @@ function Page2({ width }) {
         <div
           className="cancel"
           onClick={() => {
+            setSubject("");
+            setMessage("");
             setSendEmail(false);
           }}>
           <span>&#10060;</span>
