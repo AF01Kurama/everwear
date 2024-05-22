@@ -79,7 +79,7 @@ function Page2({ width }) {
   const onSubmitSend = async (event) => {
     event.preventDefault();
     axios
-      .post("http://everwear.onrender.com/send", {
+      .post("https://everwear.onrender.com/send", {
         email: email2,
         subject: subject,
         message: message,
