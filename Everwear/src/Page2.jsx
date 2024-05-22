@@ -7,7 +7,7 @@ import img4 from "./assets/card4.png";
 import { motion, useScroll, useTransform } from "framer-motion";
 import axios from "axios";
 
-function Page2({ width, height }) {
+function Page2({ width }) {
   const targetRefs = [
     useRef(null),
     useRef(null),
@@ -30,40 +30,67 @@ function Page2({ width, height }) {
   let [emailSubmitted, setEmailSubmitted] = useState(false);
   let [validEmail, setValidEmail] = useState(false);
   let [email, setEmail] = useState("");
-  const handleInput = (event) => {
+  let [email2, setEmail2] = useState("");
+
+  let [sendEmail, setSendEmail] = useState(false);
+  let [subject, setSubject] = useState("");
+  let [message, setMessage] = useState("");
+
+  const handleInput = (fn, event) => {
     let str = event.target.value;
-    if (
-      str.match(/^[A-Za-z\._0-9]+[@][A-Za-z]+[\.][a-z]{2,}(?:[\.][a-z]{2,})?$/)
-    )
-      setValidEmail(true);
-    else setValidEmail(false);
-    setEmail(str);
+    if (fn == setEmail) {
+      if (
+        str.match(
+          /^[A-Za-z\._0-9]+[@][A-Za-z]+[\.][a-z]{2,}(?:[\.][a-z]{2,})?$/
+        )
+      )
+        setValidEmail(true);
+      else setValidEmail(false);
+    }
+    fn(str);
   };
   const onSubmit = async (event) => {
     event.preventDefault();
+    if (validEmail) {
+      setEmailSubmitted(true);
+      axios
+        .post("https://everwear.onrender.com/email", {
+          useremail: email,
+        })
+        .then(() => {
+          console.log(done);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else return;
+  };
+  const onSubmitSend = async (event) => {
+    event.preventDefault();
     axios
-      .post("https://everwear.onrender.com/email", {
-        useremail: email,
+      .post("http://localhost:3000/send", {
+        email: email2,
+        subject: subject,
+        message: message,
       })
       .then(() => {
-        console.log(done);
+        setSendEmail(false);
+        setEmail2("");
+        setSubject("");
+        setMessage("");
       })
       .catch((err) => {
         console.log(err);
       });
-    if (validEmail) setEmailSubmitted(true);
-    else return;
   };
   const contents = [
     <>
       <div className="cardBody">
         <h2 className="cardTitle">Full Wardrobe, Nothing to Wear</h2>
         <div className="cardDesc">
-          Ever got the feeling of having a full wardrobe but feel like you have
-          nothing suitable to wear? Whether it be for your next office meeting
-          or your next Instagram post, our subscription based rental model
-          provides access to a constantly updated selection of outfits, ensuring
-          that you always have fresh and appropriate outfits.
+          Never worry about what to wear again. Our rental service offers a
+          rotating wardrobe for every occasion, with a new outfit
+          provided weekly.
         </div>
       </div>
       <div className="cardPhoto">
@@ -78,10 +105,8 @@ function Page2({ width, height }) {
         <h2 className="cardTitle">Trendy Clothes, Tight Budget</h2>
         <div className="cardDesc">
           Keeping up with fashion trends can be expensive, especially for
-          individuals on tight budgets. Our model offers a cost-effective
-          alternative to purchasing trendy items outright allowing you to access
-          the latest fashion without the hefty price tag, enabling you to stay
-          stylish within your budget.
+          individuals on tight budgets. Stay stylish on a budget by accessing
+          the latest trends affordably with our circular model.
         </div>
       </div>
     </>,
@@ -90,13 +115,10 @@ function Page2({ width, height }) {
         <h2 className="cardTitle">Infinite Wardrobe, Minimal Footprint</h2>
         <div className="cardDesc">
           Embrace an expansive wardrobe experience within minimal space
-          constraints. Our monthly subscription service offers a curated
-          selection of outfits, ensuring a diverse and constantly refreshed
-          collection. Seamlessly integrate style into your life without clutter,
-          and discover the convenience of an infinite wardrobe that complements
-          your lifestyle with elegance and efficiency. Plus, if you fall in love
-          with a piece, you have the option to keep one or two favorites at the
-          end of each month.
+          constraints. Expand your wardrobe with our monthly subscription.
+          Curated outfits, refreshed regularly. Plus, if you fall in love with a
+          piece, you have the option to keep one or two favorites at the end of
+          each month.
         </div>
       </div>
       <div className="cardPhoto">
@@ -110,12 +132,10 @@ function Page2({ width, height }) {
       <div className="cardBody">
         <h2 className="cardTitle">Fashion Meets Nature</h2>
         <div className="cardDesc">
-          The fashion industry's environmental impact, including textile waste
-          and carbon emissions, is a growing concern for environmentally
-          conscious consumers. Our model promotes sustainability by reducing the
-          demand for new clothing production and minimizing textile waste, and
-          you can contribute to environmental conservation efforts by prolonging
-          the lifespan of clothing items and reducing their carbon footprint.
+          Embrace our eco-friendly approach. We're dedicated to sustainability,
+          reducing waste, and lowering carbon emissions. By minimizing your
+          carbon footprint and extending clothing lifespans, together, we can
+          protect the planet.
         </div>
       </div>
     </>,
@@ -139,7 +159,9 @@ function Page2({ width, height }) {
                 className="form-control"
                 name="useremail"
                 value={email}
-                onChange={handleInput}
+                onChange={(event) => {
+                  handleInput(setEmail, event);
+                }}
                 required
               />
               <button className="btn btn-outline-success" type="submit">
@@ -154,6 +176,16 @@ function Page2({ width, height }) {
           you on board.
         </div>
       )}
+      <div className="contact">
+        You can reach us at <b>everwears@gmail.com</b> or{" "}
+        <span
+          onClick={() => {
+            setSendEmail(true);
+          }}>
+          <u>click here</u>
+        </span>{" "}
+        to send us an email.
+      </div>
     </>,
   ];
   return (
@@ -177,6 +209,68 @@ function Page2({ width, height }) {
           {contents[index]}
         </motion.div>
       ))}
+      <div className={`emailBox ${!sendEmail ? null : "show"}`}>
+        <div
+          className="cancel"
+          onClick={() => {
+            setSendEmail(false);
+          }}>
+          <span>&#10060;</span>
+        </div>
+        <form onSubmit={onSubmitSend}>
+          <div className="send">
+            <div>
+              <label htmlFor="email" className="form-label fs-5">
+                Email
+              </label>
+              <input
+                type="text"
+                placeholder="Email..."
+                name="email"
+                id="email"
+                className="form-control"
+                value={email2}
+                onChange={(event) => {
+                  handleInput(setEmail2, event);
+                }}
+              />
+            </div>
+            <div>
+              <label htmlFor="subject" className="form-label fs-5">
+                Subject
+              </label>
+              <input
+                type="text"
+                placeholder="Subject..."
+                name="subject"
+                id="subject"
+                className="form-control"
+                value={subject}
+                onChange={(event) => {
+                  handleInput(setSubject, event);
+                }}
+              />
+            </div>
+            <div style={{ flexDirection: "column", gap: "0.5rem" }}>
+              <label htmlFor="message" className="form-label">
+                Message
+              </label>
+              <textarea
+                name="message"
+                id="message"
+                className="form-control"
+                placeholder="Message..."
+                value={message}
+                onChange={(event) => {
+                  handleInput(setMessage, event);
+                }}></textarea>
+            </div>
+            <button type="submit" className="btn btn-outline-success">
+              Send
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }
